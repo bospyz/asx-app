@@ -5,19 +5,25 @@ import { cookies } from "next/headers";
 const COOKIE = "asx_session";
 
 export async function setSession() {
-  cookies().set(COOKIE, "1", {
+  // Добавляем await перед cookies()
+  const cookieStore = await cookies();
+  
+  cookieStore.set(COOKIE, "1", {
     httpOnly: true,
     sameSite: "lax",
-    secure: false, // поставишь true на HTTPS
+    secure: process.env.NODE_ENV === "production", // Автоматически true на Vercel (HTTPS)
     path: "/",
   });
 }
 
 export async function clearSession() {
-  cookies().set(COOKIE, "0", {
+  // Добавляем await перед cookies()
+  const cookieStore = await cookies();
+  
+  cookieStore.set(COOKIE, "0", {
     httpOnly: true,
     sameSite: "lax",
-    secure: false,
+    secure: process.env.NODE_ENV === "production",
     path: "/",
   });
 }

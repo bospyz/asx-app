@@ -1,36 +1,58 @@
 ﻿@import "tailwindcss";
 
-/* Настройка кастомных свойств в стиле v4 */
+/* Tailwind v4 theme tokens */
 @theme {
   --color-blue-asx: #4c7dff;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  
+  --color-asx-green: #ccfd03;
+
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
   @keyframes breathe {
-    0%, 100% {
+    0%,
+    100% {
       opacity: 1;
-      box-shadow: 0 0 5px #4c7dff, 0 0 10px #4c7dff;
+      box-shadow: 0 0 5px var(--color-blue-asx), 0 0 10px var(--color-blue-asx);
     }
     50% {
-      opacity: 0.5;
-      box-shadow: 0 0 2px #4c7dff, 0 0 5px #4c7dff;
+      opacity: 0.55;
+      box-shadow: 0 0 2px var(--color-blue-asx), 0 0 5px var(--color-blue-asx);
     }
   }
 }
 
-/* Глобальные стили через стандартный CSS */
+/* ===== Global base ===== */
 :root {
-  --background: #050505;
-  --foreground: #ffffff;
+  --bg: #000000;
+  --bg2: #050505;
+  --fg: #ffffff;
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background: var(--bg);
+  color: var(--fg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: crosshair;
 }
 
-/* Кастомные утилиты и компоненты */
+/* ===== Font helpers (next/font variables are set in src/app/layout.tsx) ===== */
+.font-ibm {
+  font-family: var(--font-ibm), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+.font-pixel {
+  font-family: var(--font-pixel), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+}
+
+/* ===== Components layer ===== */
 @layer components {
   .btn {
     @apply inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-medium transition-all duration-200 active:scale-95;
@@ -40,74 +62,259 @@ body {
   .btn-primary {
     @apply border-none bg-white text-black;
   }
-  
-  /* Если btn-primary должен светиться, лучше добавить это отдельно через CSS */
+
   .btn-primary:hover {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.22);
   }
 
   .breathe {
     animation: breathe 2.5s ease-in-out infinite;
   }
-  
+
   .mono {
     font-family: var(--font-mono);
   }
+
+  .panel {
+    border-radius: 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.55);
+  }
 }
 
-/* Стилизация скроллбара */
+/* ===== Scrollbar ===== */
 ::-webkit-scrollbar {
   width: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.10);
   border-radius: 10px;
 }
 
-:root {
-  --bg: #020202;
-}
-
-body {
-  background-color: var(--bg);
-  cursor: crosshair; /* Меняем курсор на прицел для техно-вайба */
-}
-
-/* Эффект шума (Film Grain) */
+/* ===== Film grain / noise overlay for pages that use .noise ===== */
 .noise::before {
   content: "";
   position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  opacity: 0.04;
+  inset: 0;
+  opacity: 0.035;
   pointer-events: none;
   z-index: 9999;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Кастомный эффект для текста */
+/* ===== Text effects ===== */
 .text-edge {
-  text-shadow: 0 0 20px rgba(76, 125, 255, 0.2);
+  text-shadow: 0 0 20px rgba(76, 125, 255, 0.18);
 }
 
 .stroke-text {
-  -webkit-text-stroke: 1px rgba(255,255,255,0.15);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
   color: transparent;
   transition: all 0.5s ease;
 }
-
 .group:hover .stroke-text {
-  -webkit-text-stroke: 1px rgba(255,255,255,0.5);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
 }
-@keyframes scan {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(204,253,3,0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(204,253,3,0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.25;
 }
-.panel {
-  border-radius: 2rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+.hero-grid-perspective {
+  background-image:
+    linear-gradient(to right, rgba(204,253,3,0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(204,253,3,0.12) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.35;
+
+  transform-origin: center top;
+  transform: perspective(900px) rotateX(55deg) translateY(-20%);
+  animation: gridMove 16s linear infinite;
+}
+@keyframes gridMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 120px;
+  }
+}
+.hero-grid-sweep {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(204,253,3,0.15) 45%,
+    rgba(204,253,3,0.35) 50%,
+    rgba(204,253,3,0.15) 55%,
+    transparent 100%
+  );
+  animation: gridSweep 6s cubic-bezier(0.2, 0.9, 0.2, 1) infinite;
+  mix-blend-mode: screen;
+}
+@keyframes gridSweep {
+  0% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(120%);
+    opacity: 0;
+  }
+}
+.hero-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  animation: noiseShift 0.25s steps(2) infinite;
+}
+/* Новая мягкая меш-сетка */
+.hero-mesh {
+  background-image: 
+    radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+  background-size: 32px 32px;
+}
+
+/* Эффект глубокого космоса / частиц */
+.hero-particles {
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 40px 70px, var(--color-blue-asx), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 90px 40px, var(--color-asx-green), rgba(0,0,0,0));
+  background-size: 200px 200px;
+  opacity: 0.2;
+  animation: particlesMove 60s linear infinite;
+}
+
+@keyframes particlesMove {
+  from { transform: translateY(0); }
+  to { transform: translateY(-200px); }
+}
+
+/* Обновленный шум (более мягкий) */
+.hero-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+}
+
+/* Анимация пульсации для синего свечения */
+@keyframes pulse {
+  0%, 100% { opacity: 0.08; transform: scale(1); }
+  50% { opacity: 0.15; transform: scale(1.1); }
+}
+.animate-pulse {
+  animation: pulse 8s ease-in-out infinite;
+}
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(204,253,3,0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(204,253,3,0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.20;
+}
+
+@keyframes gridMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 140px; }
+}
+
+.hero-grid-perspective {
+  background-image:
+    linear-gradient(to right, rgba(204,253,3,0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(204,253,3,0.14) 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: 0.35;
+
+  transform-origin: center top;
+  transform: perspective(900px) rotateX(55deg) translateY(-18%);
+  animation: gridMove 12s linear infinite;
+}
+
+@keyframes gridSweep {
+  0% { transform: translateY(-120%); opacity: 0; }
+  18% { opacity: 0.9; }
+  100% { transform: translateY(120%); opacity: 0; }
+}
+
+.hero-grid-sweep {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(204,253,3,0.12) 45%,
+    rgba(204,253,3,0.35) 50%,
+    rgba(204,253,3,0.12) 55%,
+    transparent 100%
+  );
+  animation: gridSweep 5.5s cubic-bezier(0.2, 0.9, 0.2, 1) infinite;
+  mix-blend-mode: screen;
+}
+
+/* (оставь свой hero-noise как есть) */
+
+/* ===== HERO GRID (used by <HeroBackground/>) ===== */
+.hero-depth {
+  background: radial-gradient(circle at 30% 20%, rgba(204,253,3,0.10) 0%, transparent 55%),
+    radial-gradient(circle at 75% 75%, rgba(96,165,250,0.08) 0%, transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04) 0%, transparent 65%);
+  filter: blur(70px);
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(204,253,3,0.18) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(204,253,3,0.18) 1px, transparent 1px);
+  background-size: 56px 56px;
+  transform-origin: center top;
+  transform: perspective(900px) rotateX(58deg) translateY(-12%);
+  animation: heroGridMove 10s linear infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes heroGridMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 180px;
+  }
+}
+
+.hero-grid-shimmer {
+  background: radial-gradient(circle at 20% 35%, rgba(204,253,3,0.18) 0%, transparent 45%),
+    radial-gradient(circle at 70% 55%, rgba(204,253,3,0.12) 0%, transparent 48%),
+    linear-gradient(90deg, transparent 0%, rgba(204,253,3,0.10) 50%, transparent 100%);
+  filter: blur(18px);
+  animation: heroGridShimmer 6.5s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes heroGridShimmer {
+  0% {
+    transform: translateX(-18%) translateY(0);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateX(18%) translateY(-2%);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateX(-18%) translateY(0);
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-grid,
+  .hero-grid-shimmer,
+  .hero-grid-sweep,
+  .hero-grid-perspective,
+  .hero-scanlines,
+  .hero-scanbar,
+  .hero-noise {
+    animation: none !important;
+  }
 }

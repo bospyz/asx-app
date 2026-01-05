@@ -1,0 +1,20 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Lead {
+  id        String   @id @default(uuid())
+  name      String?
+  email     String?
+  company   String?
+  message   String?
+  source    String   @default("website")
+  createdAt DateTime @default(now())
+
+  @@map("leads")
+}
