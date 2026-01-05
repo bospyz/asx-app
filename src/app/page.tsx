@@ -329,41 +329,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* EXPERIENCE */}
-        <section
-          id="experience"
-          className="scroll-mt-28 sm:scroll-mt-32 py-20 sm:py-28 px-4 sm:px-6 max-w-[1400px] mx-auto"
-        >
-          <div className="text-[11px] uppercase tracking-widest text-white/60 mb-4">
-            05. TEAM
-          </div>
-          <h2 className="text-4xl sm:text-5xl font-pixel uppercase text-[#CCFD03] leading-none mb-8 sm:mb-10">
-            Built_For_Institutions
-          </h2>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-            <BrutalPanel
-              className="lg:col-span-7"
-              title="Enterprise_Engineering"
-              desc="Secure systems, not consumer apps."
-            >
-              <ul className="space-y-2 text-sm text-white/60">
-                <li>{`> API-first architecture + documentation discipline`}</li>
-                <li>{`> Queue-based processing for reliability under load`}</li>
-                <li>{`> RBAC + audit traces (compliance mindset)`}</li>
-                <li>{`> On-prem/private network deployment patterns`}</li>
-              </ul>
-            </BrutalPanel>
-
-            <BrutalPanel className="lg:col-span-5" title="Leadership" desc="CEO + CTO core.">
-              <ul className="space-y-2 text-sm text-white/60">
-                <li>{`> CEO — product, risk strategy, enterprise narrative`}</li>
-                <li>{`> CTO — secure backend systems, on-prem architecture`}</li>
-                <li>{`> Mission — trust layer for AI-driven communications`}</li>
-              </ul>
-            </BrutalPanel>
-          </div>
-        </section>
+     
 
         {/* CONTACT */}
         <section
