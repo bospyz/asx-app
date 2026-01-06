@@ -102,7 +102,6 @@ export default function HomePage() {
               <BigNumber value="99.9%" label="Target Accuracy (enterprise)" />
             </div>
             <div className="px-6 mt-6 text-[10px] uppercase tracking-widest">
-              NOTE: replace metrics with sourced numbers before enterprise outreach.
             </div>
           </div>
         </section>
